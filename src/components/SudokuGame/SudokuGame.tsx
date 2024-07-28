@@ -45,18 +45,21 @@ export default function SudokuGame() {
   );
 
   return (
-    <>
-      <h1>Sudoku Cheat 📝</h1>
-      <table className="sudoku-board">
+    <div className="sudoku-board__container">
+      <h1 className="sudoku-board__heading">Sudoku Cheat 📝</h1>
+      <table className="sudoku-board__table">
         <tbody>
           {board.map((row, rowIndex) => (
-            <tr key={`row-${rowIndex}`}>
+            <tr className="sudoku-board__table-row" key={`row-${rowIndex}`}>
               {row.map((cell, cellIndex) => (
                 <td
                   key={`cell-${rowIndex}-${cellIndex}`}
-                  className={`sudoku-cell ${solved ? 'solved' : ''}`}
+                  className={`sudoku-board__table-cell ${
+                    solved ? 'sudoku-board__table-cell--solved' : ''
+                  }`}
                 >
                   <input
+                    className="sudoku-board__table-cell-input"
                     value={cell != 0 ? cell : ''}
                     type="number"
                     onChange={(e) => {
@@ -75,12 +78,16 @@ export default function SudokuGame() {
           ))}
         </tbody>
       </table>
-      <div className="sudoku-controls">
+      <div className="sudoku-board__controls">
         <button onClick={clearBoard}>Clear 🗑️</button>
-        <button disabled={solved} className="solve" onClick={solveSudoku}>
+        <button
+          className="sudoku-board__solve-button"
+          disabled={solved}
+          onClick={solveSudoku}
+        >
           Solve ✅
         </button>
       </div>
-    </>
+    </div>
   );
 }

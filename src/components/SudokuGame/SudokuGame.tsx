@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import SudokuSolver, { generateBoard, validCellValue } from '../../sudoku';
@@ -8,12 +8,12 @@ export default function SudokuGame() {
   const [board, setBoard] = useState<number[][]>(generateBoard());
   const [solved, setSolved] = useState<boolean>(false);
 
-  const clearBoard = () => {
+  const clearBoard = useCallback(() => {
     setSolved(false);
     setBoard(generateBoard());
-  };
+  }, [setSolved, setBoard]);
 
-  const solveSudoku = () => {
+  const solveSudoku = useCallback(() => {
     setSolved(false);
     const sudokuSolver = new SudokuSolver(board);
     const { solved, board: solvedBoard } = sudokuSolver.solveSudoku();
@@ -31,59 +31,63 @@ export default function SudokuGame() {
         position: 'top-center',
       });
     }
-  };
+  }, [board, setSolved, setBoard]);
 
-  const changeBoardValue = (row: number, col: number, value: number) => {
-    const newBoard = [...board];
-    if (validCellValue(value)) {
-      newBoard[row][col] = value;
-      setBoard([...board]);
-    }
-  };
+  const changeBoardValue = useCallback(
+    (row: number, col: number, value: number) => {
+      const newBoard = [...board];
+      if (validCellValue(value)) {
+        newBoard[row][col] = value;
+        setBoard([...board]);
+      }
+    },
+    [board, setBoard],
+  );
 
   return (
-    <>
-      <h1>Sudoku Cheat 📝</h1>
-      <table className="sudoku-board">
+    <div className="sudoku-board__container">
+      <h1 className="sudoku-board__heading">Sudoku Cheat 📝</h1>
+      <table className="sudoku-board__table">
         <tbody>
-        {board.map((row, rowIndex) => (
-          <tr key={`row-${rowIndex}`}>
-            {row.map((cell, cellIndex) => (
-              <td
-                key={`cell-${rowIndex}-${cellIndex}`}
-                className={`sudoku-cell ${solved ? 'solved' : ''}`}
-              >
-                <input
-                  value={cell != 0 ? cell : ''}
-                  type="number"
-                  onChange={(e) => {
-                    changeBoardValue(
-                      rowIndex,
-                      cellIndex,
-                      !isNaN(Number(e.target.value))
-                        ? Number(e.target.value)
-                        : -1,
-                    );
-                  }}
-                />
-              </td>
-            ))}
-          </tr>
-        ))}
+          {board.map((row, rowIndex) => (
+            <tr className="sudoku-board__table-row" key={`row-${rowIndex}`}>
+              {row.map((cell, cellIndex) => (
+                <td
+                  key={`cell-${rowIndex}-${cellIndex}`}
+                  className={`sudoku-board__table-cell ${
+                    solved ? 'sudoku-board__table-cell--solved' : ''
+                  }`}
+                >
+                  <input
+                    className="sudoku-board__table-cell-input"
+                    value={cell != 0 ? cell : ''}
+                    type="number"
+                    onChange={(e) => {
+                      changeBoardValue(
+                        rowIndex,
+                        cellIndex,
+                        !isNaN(Number(e.target.value))
+                          ? Number(e.target.value)
+                          : -1,
+                      );
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div className="sudoku-controls">
+      <div className="sudoku-board__controls">
         <button onClick={clearBoard}>Clear 🗑️</button>
         <button
+          className="sudoku-board__solve-button"
           disabled={solved}
-          className="solve"
-          onClick={() => {
-            solveSudoku();
-          }}
+          onClick={solveSudoku}
         >
-          Solve <span>✅</span>
+          Solve ✅
         </button>
       </div>
-    </>
+    </div>
   );
 }

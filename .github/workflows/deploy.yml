@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  # Allow manual workflow triggers
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -34,6 +36,16 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
+          BASE_URL: ${{ github.event.repository.name }}
+
+      - name: Verify build
+        run: |
+          if [ ! -d "./dist" ]; then
+            echo "Build failed - dist directory not created"
+            exit 1
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

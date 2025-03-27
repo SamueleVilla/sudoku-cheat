@@ -1,0 +1,73 @@
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Nunito:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+
+:root {
+  /* Fonts */
+  --font-primary: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-secondary: 'Poppins', 'Roboto', 'Arial', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  
+  /* Light Theme Colors */
+  --light-bg: #f8f9fa;
+  --light-card-bg: #ffffff;
+  --light-cell-bg-1: #ffffff;
+  --light-cell-bg-2: rgba(240, 240, 255, 0.5);
+  --light-cell-selected: rgba(100, 108, 255, 0.15);
+  --light-border: #d1d5db;
+  --light-border-strong: #1f2937;
+  --light-text: #111827;
+  --light-text-secondary: #4b5563;
+  --light-accent: #646cff;
+  
+  /* Dark Theme Colors */
+  --dark-bg: #121212;
+  --dark-card-bg: #1e1e1e;
+  --dark-cell-bg-1: #2a2a2a;
+  --dark-cell-bg-2: #333333;
+  --dark-cell-selected: rgba(138, 143, 255, 0.2);
+  --dark-border: #3a3a3a;
+  --dark-border-strong: #555555;
+  --dark-text: #e5e7eb;
+  --dark-text-secondary: #9ca3af;
+  --dark-accent: #818cf8;
+  
+  /* Buttons */
+  --btn-solve: #84cc16;
+  --btn-solve-hover: #a3e635;
+  --btn-clear-dark: #4b5563;
+  --btn-clear-light: #e5e7eb;
+  --btn-clear-hover-dark: #6b7280;
+  --btn-clear-hover-light: #d1d5db;
+}
+
+/* Dark theme (default) */
+:root {
+  --bg: var(--dark-bg);
+  --card-bg: var(--dark-card-bg);
+  --cell-bg-1: var(--dark-cell-bg-1);
+  --cell-bg-2: var(--dark-cell-bg-2);
+  --cell-selected: var(--dark-cell-selected);
+  --border: var(--dark-border);
+  --border-strong: var(--dark-border-strong);
+  --text: var(--dark-text);
+  --text-secondary: var(--dark-text-secondary);
+  --accent: var(--dark-accent);
+  --btn-clear: var(--btn-clear-dark);
+  --btn-clear-hover: var(--btn-clear-hover-dark);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg: var(--light-bg);
+  --card-bg: var(--light-card-bg);
+  --cell-bg-1: var(--light-cell-bg-1);
+  --cell-bg-2: var(--light-cell-bg-2);
+  --cell-selected: var(--light-cell-selected);
+  --border: var(--light-border);
+  --border-strong: var(--light-border-strong);
+  --text: var(--light-text);
+  --text-secondary: var(--light-text-secondary);
+  --accent: var(--light-accent);
+  --btn-clear: var(--btn-clear-light);
+  --btn-clear-hover: var(--btn-clear-hover-light);
+}

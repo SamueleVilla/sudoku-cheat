@@ -1,20 +1,24 @@
 import './App.css';
 import ReactLogo from './components/ReactLogo';
 import SudokuGame from './components/SudokuGame';
-import { Toaster } from 'react-hot-toast';
+import ThemeToggle from './components/ThemeToggle';
+import ToastProvider from './components/Toast';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    <>
-      <Toaster></Toaster>
-      <main>
-        <SudokuGame />
-      </main>
-      <footer className="footer">
-        <ReactLogo />
-        <span>Powered by React</span>
-      </footer>
-    </>
+    <ThemeProvider>
+      <ToastProvider>
+        <ThemeToggle />
+        <main>
+          <SudokuGame />
+        </main>
+        <footer className="footer">
+          <ReactLogo />
+          <span className="">Powered by React</span>
+        </footer>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 
